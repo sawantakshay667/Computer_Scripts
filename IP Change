@@ -1,0 +1,59 @@
+@ECHO off
+cls
+:start
+ECHO.
+ECHO 1. Change Connection 1 192.168.10.0
+ECHO 2. Change Connection 2 192.168.1.0 
+ECHO 3. Change Connection 3 192.168.43.0 
+ECHO 4. Change Connection 4 10.20.0.0 
+ECHO 5. Change Connection 5 192.168.0.0 
+ECHO 6. Obtain an IP address automatically
+ECHO 7. Exit
+set choice=
+set /p choice=Type the number to print text.
+if not '%choice%'=='' set choice=%choice:~0,1%
+if '%choice%'=='1' goto con1
+if '%choice%'=='2' goto con2
+if '%choice%'=='3' goto con3
+if '%choice%'=='4' goto con4
+if '%choice%'=='5' goto con5
+if '%choice%'=='6' goto autosearch
+if '%choice%'=='7' goto end
+ECHO "%choice%" is not valid, try again
+ECHO.
+goto start
+:con1
+ECHO Connecting Connection 1
+netsh interface ipv4 set address name="WiFi" static 192.168.10.23 255.255.255.0 192.168.10.1 
+goto end
+
+:con2
+ECHO Connecting Connection 2
+netsh interface ipv4 set address name="WiFi" static 192.168.1.123 255.255.255.0 192.168.1.1
+goto end
+
+:con3
+ECHO Connecting Connection 3
+netsh interface ipv4 set address name="WiFi" static 192.168.43.123 255.255.255.0 192.168.43.1 
+goto end
+
+:con4
+ECHO Connecting Connection 4
+netsh interface ipv4 set address name="WiFi" static 10.20.1.123 255.255.240.0 10.20.0.1 
+goto end
+
+:con5
+ECHO Connecting Connection 5
+netsh interface ipv4 set address name="WiFi" static 192.168.0.123 255.255.255.0 192.168.0.1
+goto end
+
+:autosearch
+ECHO obtaining auto IP
+ipconfig /renew "WiFi"
+goto end
+
+:bye
+ECHO BYE
+goto end
+
+:end
